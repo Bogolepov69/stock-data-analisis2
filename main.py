@@ -2,6 +2,7 @@ import data_download as dd
 import data_plotting as dplt
 import pandas as pd
 
+
 def main():
     """
     Основная функция для запуска программы.
@@ -10,13 +11,13 @@ def main():
     загружает данные, расчитывает скользящую среднюю и отображает график.
     """
     print("Добро пожаловать в инструмент получения и построения графиков биржевых данных.")
-    print("Вот несколько примеров биржевых тикеров, которые вы можете рассмотреть: AAPL (Apple Inc), GOOGL (Alphabet Inc), MSFT (Microsoft Corporation), AMZN (Amazon.com Inc), TSLA (Tesla Inc).")
+    print(
+        "Вот несколько примеров биржевых тикеров, которые вы можете рассмотреть: AAPL (Apple Inc), GOOGL (Alphabet Inc), MSFT (Microsoft Corporation), AMZN (Amazon.com Inc), TSLA (Tesla Inc).")
     print("Общие периоды времени для данных о запасах включают: 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.")
 
     ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc): ")
     period = input("Введите период для данных (например, '1mo' для одного месяца): ")
     window_size = 20
-
 
     try:
         stock_data = dd.fetch_stock_data(ticker, period)
@@ -28,6 +29,10 @@ def main():
                 dplt.create_and_save_plot(stock_data_with_sma, ticker, period)
             else:
                 print("Ошибка при расчете скользящего среднего.")
+
+        # Вызов функции для расчета средней цены
+        if stock_data is not None:
+            calculate_and_display_average_price(stock_data)
 
     except Exception as e:
         print(f"Произошла критическая ошибка: {e}")
@@ -50,8 +55,6 @@ def calculate_and_display_average_price(data):
 
     average_price = data['Close'].mean()
     print(f"Средняя цена закрытия: {average_price:.2f}")
-
-
 
 
 if __name__ == "__main__":
